@@ -1,18 +1,24 @@
-# list windows info on Mac
+# <div align="center">list windows info on macOS 🍎</div>
 
-list all windows title, rect and their owner process ids.
+<p align="center">
+<a href="https://github.com/foldright/list-windows-on-mac/actions/workflows/python-package.yml"><img src="https://img.shields.io/github/actions/workflow/status/foldright/list-windows-on-mac/python-package.yml?branch=master&logo=github&logoColor=white" alt="Github Workflow Build Status"></a>
+<a href="https://github.com/foldright/list-windows-on-mac/stargazers"><img src="https://img.shields.io/github/stars/foldright/list-windows-on-mac" alt="GitHub Stars"></a>
+<a href="https://github.com/foldright/list-windows-on-mac"><img src="https://img.shields.io/github/repo-size/foldright/list-windows-on-mac" alt="GitHub repo size"></a>
+</p>
+
+List windows info(rect, owner process id, windows id, title) on macOS.
 
 ## Prerequisites
-
-Tested on `MacOS 13.4`, Python `3.7 ~ 3.11`.
 
 *Note* if you run into error `No module named Quartz`, then run `pip install pyobjc-framework-Quartz` to install it;
 or use recommended `virtual Python environments` to install it.
 
+Tested on Python `3.7 ~ 3.12` macOS `12.6(GitHub Actions)/13.4(Personal MBP)`,
+
 ## Usage
 
 ```sh
-$ python lswin.py
+$ python3 lswin.py
   PID  WinID  (x, y, w, h)           [Title] SubTitle
 -----  -----  ---------------------  -------------------------------------------
   163      2  (2952, 0, 1, 1)        [Window Server]
