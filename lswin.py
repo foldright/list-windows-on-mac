@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import sys
+from collections.abc import Iterable
 from dataclasses import dataclass, fields
 from itertools import tee
 from optparse import OptionParser
-from typing import Iterable
 
 import Quartz
 
