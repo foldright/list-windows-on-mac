@@ -2,8 +2,13 @@
 
 <p align="center">
 <a href="https://github.com/foldright/list-windows-on-mac/actions/workflows/python-package.yml"><img src="https://img.shields.io/github/actions/workflow/status/foldright/list-windows-on-mac/python-package.yml?branch=master&logo=github&logoColor=white" alt="Github Workflow Build Status"></a>
+<a href="https://devguide.python.org/versions/"><img src="https://img.shields.io/badge/3.7+-339933?label=python&logo=python&logoColor=white" alt="gitpod: Ready to Code"></a>
+<a href="https://www.apache.org/licenses/LICENSE-2.0.html"><img src="https://img.shields.io/github/license/foldright/list-windows-on-mac?color=4D7A97&logo=apache" alt="License"></a>
+<a href="https://github.com/foldright/list-windows-on-mac/releases"><img src="https://img.shields.io/github/release/foldright/list-windows-on-mac.svg" alt="GitHub release"></a>
 <a href="https://github.com/foldright/list-windows-on-mac/stargazers"><img src="https://img.shields.io/github/stars/foldright/list-windows-on-mac" alt="GitHub Stars"></a>
+<a href="https://github.com/foldright/list-windows-on-mac/graphs/contributors"><img src="https://img.shields.io/github/contributors/foldright/list-windows-on-mac" alt="GitHub Contributors"></a>
 <a href="https://github.com/foldright/list-windows-on-mac"><img src="https://img.shields.io/github/repo-size/foldright/list-windows-on-mac" alt="GitHub repo size"></a>
+<a href="https://gitpod.io/#https://github.com/foldright/list-windows-on-mac"><img src="https://img.shields.io/badge/Gitpod-ready to code-339933?label=gitpod&logo=gitpod&logoColor=white" alt="gitpod: Ready to Code"></a>
 </p>
 
 List windows info(rect, owner process id, windows id, title) on macOS.
@@ -43,7 +48,7 @@ $ python3 lswin.py
 # more supported options see help
 $ ./lswin.py -h
 Usage: lswin.py [OPTION]...
-list all windows title and their owner process ids.
+list windows info(rect, owner process id, window id, title) on macOS.
 
 Examples:
   lswin.py
@@ -64,6 +69,9 @@ Options:
 
 ## Known problems
 
-Processes created by Safari browser will be displayed as same PID as main Safari process.
+- Processes created by Safari browser will be displayed as same PID as main Safari process.  
+  https://github.com/sjitech/mac_list_windows_pids/issues/1
 
-https://github.com/sjitech/mac_list_windows_pids/issues/1
+## Credits
+
+- This project is forked from [`sjitech/mac_list_windows_pids`](https://github.com/sjitech/mac_list_windows_pids)

@@ -8,6 +8,8 @@ from typing import Iterable
 
 import Quartz
 
+__version__ = '1.1.0-dev'
+
 
 @dataclass
 class Rect:
@@ -98,7 +100,7 @@ if __name__ == '__main__':
 
     option_parser = OptionParser(
         '%prog [OPTION]...'
-        '\nlist all windows title and their owner process ids.'
+        '\nlist windows info(rect, owner process id, window id, title) on macOS.'
         '\n\nExamples:'
         '\n  %prog'
         '\n  %prog --exclude-0-area'
