@@ -76,7 +76,7 @@ def print_window_infos(win_list: Iterable[WindowInfo], no_headers: bool = False)
 
     # print head
     if not no_headers:
-        print(f"{s_pid : >{max_pid_chars}}  {s_win_id : >{max_wid_chars}}"
+        print(f"{s_pid: >{max_pid_chars}}  {s_win_id: >{max_wid_chars}}"
               f"  {'(x, y, w, h)': <{max_rect_chars}}  [Title] SubTitle")
         print(f"{'-' * max_pid_chars}  {'-' * max_wid_chars}  {'-' * max_rect_chars}"
               f"  {'-' * (80 - max_pid_chars - max_wid_chars - max_rect_chars - 6)}")
