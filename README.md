@@ -1,8 +1,8 @@
 # <div align="center">list windows info on macOS 🍎</div>
 
 <p align="center">
-<a href="https://github.com/foldright/list-windows-on-mac/actions/workflows/python-package.yml"><img src="https://img.shields.io/github/actions/workflow/status/foldright/list-windows-on-mac/python-package.yml?branch=master&logo=github&logoColor=white" alt="Github Workflow Build Status"></a>
-<a href="https://devguide.python.org/versions/"><img src="https://img.shields.io/badge/3.7+-339933?label=python&logo=python&logoColor=white" alt="gitpod: Ready to Code"></a>
+<a href="https://github.com/foldright/list-windows-on-mac/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/foldright/list-windows-on-mac/ci.yml?branch=master&logo=github&logoColor=white" alt="Github Workflow Build Status"></a>
+<a href="https://devguide.python.org/versions/"><img src="https://img.shields.io/badge/3.8+-339933?label=python&logo=python&logoColor=white" alt="gitpod: Ready to Code"></a>
 <a href="https://www.apache.org/licenses/LICENSE-2.0.html"><img src="https://img.shields.io/github/license/foldright/list-windows-on-mac?color=4D7A97&logo=apache" alt="License"></a>
 <a href="https://github.com/foldright/list-windows-on-mac/releases"><img src="https://img.shields.io/github/release/foldright/list-windows-on-mac.svg" alt="GitHub release"></a>
 <a href="https://github.com/foldright/list-windows-on-mac/stargazers"><img src="https://img.shields.io/github/stars/foldright/list-windows-on-mac" alt="GitHub Stars"></a>
@@ -18,7 +18,7 @@ List windows info(rect, owner process id, windows id, title) on macOS.
 *Note* if you run into error `No module named Quartz`, then run `pip install pyobjc-framework-Quartz` to install it;
 or use recommended `virtual Python environments` to install it.
 
-Tested on Python `3.7 ~ 3.12` macOS `12.6(GitHub Actions)/13.4(Personal MBP)`,
+Tested on Python `3.8 ~ 3.12` macOS `12.6(GitHub Actions)/13.4(Personal MBP)`,
 
 ## Usage
 

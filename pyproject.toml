@@ -7,11 +7,12 @@ license = "Apache-2.0 license"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8.1"
 pyobjc-framework-Quartz = "^9.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.2"
+flake8 = "^6.1.0"
 
 
 [[tool.poetry.source]]
