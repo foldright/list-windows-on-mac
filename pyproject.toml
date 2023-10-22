@@ -2,7 +2,7 @@
 name = "list-windows-on-mac"
 version = "1.1.0-dev"
 description = "List windows info(rect, owner process id, windows id, title) on macOS"
-authors = ["Jerry Lee <oldratlee@gmail.com>"]
+authors = ["Jerry Lee <oldratlee@gmail.com>", "QianJin2013 <osexp2003@gmail.com>"]
 license = "Apache-2.0 license"
 readme = "README.md"
 
@@ -13,6 +13,7 @@ pyobjc-framework-Quartz = "^9.2"
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.2"
 flake8 = "^6.1.0"
+mypy = "^1.6.1"
 
 
 [[tool.poetry.source]]

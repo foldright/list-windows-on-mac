@@ -9,4 +9,5 @@ logAndRun() {
   "$@"
 }
 
-logAndRun flake8 --count --statistics --show-source --max-complexity=10 --max-line-length=120 *.py tests
+logAndRun flake8 --count --statistics --show-source --max-complexity=10 --max-line-length=120 ./*.py tests
+logAndRun mypy --ignore-missing-imports ./*.py tests
