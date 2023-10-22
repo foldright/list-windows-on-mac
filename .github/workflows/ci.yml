@@ -24,12 +24,12 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements-dev.txt
+        pip install -r requirements.txt
+    - name: run lswin.py
+      run: ./lswin.py
+    - name: Install dev dependencies
+      run: pip install -r requirements-dev.txt
     - name: Lint
       run: scripts/lint.sh
-    - name: run lswin.py
-      run: |
-        ./lswin.py
     - name: Test with pytest
-      run: |
-        pytest tests
+      run: pytest tests
