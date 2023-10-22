@@ -1,7 +1,7 @@
 import random
 from typing import List
 
-from lswin import Rect, WindowInfo, filter_window_infos, sorted_window_infos
+from lswin import Rect, WindowInfo, filter_window_infos, sorted_window_infos, window_infos_to_json
 
 _mocked_win_list: List[WindowInfo] = [
     WindowInfo(pid=101, win_id=13, rect=Rect(x=0, y=0, width=0, height=100),
@@ -92,3 +92,37 @@ def test_sorted_window_infos():
         WindowInfo(pid=202, win_id=21, rect=Rect(x=10, y=15, width=100, height=100),
                    title='title202', subtitle='subtitle21'),
     ]
+
+
+def test_window_infos_to_json():
+    assert window_infos_to_json([
+        WindowInfo(pid=101, win_id=11, rect=Rect(x=1, y=20, width=10, height=200),
+                   title='title101', subtitle='subtitle11'),
+        WindowInfo(pid=202, win_id=21, rect=Rect(x=10, y=15, width=100, height=100),
+                   title='title202', subtitle='subtitle21'),
+    ]) == r'''[
+  {
+    "pid": 101,
+    "win_id": 11,
+    "rect": {
+      "x": 1,
+      "y": 20,
+      "width": 10,
+      "height": 200
+    },
+    "title": "title101",
+    "subtitle": "subtitle11"
+  },
+  {
+    "pid": 202,
+    "win_id": 21,
+    "rect": {
+      "x": 10,
+      "y": 15,
+      "width": 100,
+      "height": 100
+    },
+    "title": "title202",
+    "subtitle": "subtitle21"
+  }
+]'''

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import json
 import sys
-from dataclasses import dataclass, fields
-from itertools import tee
+from dataclasses import dataclass
 from optparse import OptionParser
 from typing import Iterable
 
@@ -43,6 +43,14 @@ class WindowInfo:
     subtitle: str
 
 
+class _DataClassJSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        from dataclasses import is_dataclass, asdict
+        if is_dataclass(o):
+            return asdict(o)
+        return super().default(o)
+
+
 def list_window_infos() -> Iterable[WindowInfo]:
     for w in Quartz.CGWindowListCopyWindowInfo(Quartz.kCGWindowListOptionAll, Quartz.kCGNullWindowID):
         bounds = w.valueForKey_('kCGWindowBounds')
@@ -78,7 +86,9 @@ def sorted_window_infos(win_list: Iterable[WindowInfo], sort_keys: Iterable[str]
     )
 
 
-def print_window_infos(win_list: Iterable[WindowInfo], no_headers: bool = False):
+def print_window_infos_table(win_list: Iterable[WindowInfo], no_headers: bool = False):
+    from itertools import tee
+
     s_pid = 'PID'
     s_win_id = 'WinID'
 
@@ -105,7 +115,17 @@ def print_window_infos(win_list: Iterable[WindowInfo], no_headers: bool = False)
               f"  {w.rect.s(): <{max_rect_chars}}  {title_info}")
 
 
+def window_infos_to_json(win_list: Iterable[WindowInfo]) -> str:
+    from json import dumps
+    return dumps(list(win_list), cls=_DataClassJSONEncoder, indent=2)
+
+
+def print_window_infos_json(win_list: Iterable[WindowInfo]):
+    print(window_infos_to_json(win_list))
+
+
 def main():
+    from dataclasses import fields
     supported_sort_keys = tuple(
         [f.name for f in fields(WindowInfo) if f.name != 'rect']
         + [f.name for f in fields(Rect)]
@@ -137,6 +157,8 @@ def main():
     option_parser.add_option(
         '-H', '--no-headers', dest='no_headers', default=False,
         action='store_true', help='print no header line')
+    option_parser.add_option(
+        '--json', dest='json', default=False, action='store_true', help='print json format')
 
     options, _ = option_parser.parse_args()
     if illegal_sort_keys := tuple(k for k in options.sort_keys if k not in supported_sort_keys):
@@ -151,7 +173,10 @@ def main():
     win_list = list_window_infos()
     win_list = filter_window_infos(win_list, options.exclude_0_area, options.keep_one_for_same_pid_rect)
     win_list = sorted_window_infos(win_list, options.sort_keys)
-    print_window_infos(win_list, no_headers=options.no_headers)
+    if options.json:
+        print_window_infos_json(win_list)
+    else:
+        print_window_infos_table(win_list, no_headers=options.no_headers)
 
     return 0
 
