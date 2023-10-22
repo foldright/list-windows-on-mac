@@ -60,6 +60,17 @@ def list_window_infos() -> Iterable[WindowInfo]:
     )
 
 
+def filter_window_infos(
+    win_list: Iterable[WindowInfo],
+    exclude_0_area, keep_one_for_same_pid_rect
+) -> Iterable[WindowInfo]:
+    if exclude_0_area:
+        win_list = (w for w in win_list if w.rect.width > 0 and w.rect.height > 0)
+    if keep_one_for_same_pid_rect:
+        win_list = {(w.pid, w.rect.t()): w for w in win_list}.values()
+    return win_list
+
+
 def print_window_infos(win_list: Iterable[WindowInfo], no_headers: bool = False):
     s_pid = 'PID'
     s_win_id = 'WinID'
@@ -87,12 +98,21 @@ def print_window_infos(win_list: Iterable[WindowInfo], no_headers: bool = False)
               f"  {win.rect.s(): <{max_rect_chars}}  {title_info}")
 
 
-if __name__ == '__main__':
+def sorted_window_infos(win_list: Iterable[WindowInfo], sort_keys: Iterable[str]) -> Iterable[WindowInfo]:
+    return sorted(
+        win_list, key=lambda w: tuple(
+            getattr(w, k) if hasattr(w, k) else getattr(w.rect, k)
+            for k in sort_keys
+        ) + (w.pid, w.win_id)
+    )
+
+
+def main():
     supported_sort_keys = tuple(
         [f.name for f in fields(WindowInfo) if f.name != 'rect']
         + [f.name for f in fields(Rect)]
     )
-    sort_keys_str = ', '.join(supported_sort_keys)
+    supported_sort_keys_str = ', '.join(supported_sort_keys)
 
     ############################################################
     # parse options
@@ -100,7 +120,7 @@ if __name__ == '__main__':
 
     option_parser = OptionParser(
         '%prog [OPTION]...'
-        '\nlist windows info(rect, owner process id, window id, title) on macOS.'
+        '\nlist win_list info(rect, owner process id, window id, title) on macOS.'
         '\n\nExamples:'
         '\n  %prog'
         '\n  %prog --exclude-0-area'
@@ -109,13 +129,13 @@ if __name__ == '__main__':
     )
     option_parser.add_option(
         '-Z', '--exclude-0-area', dest='exclude_0_area', default=False,
-        action='store_true', help='exclude windows with 0 area')
+        action='store_true', help='exclude win_list with 0 area')
     option_parser.add_option(
         '-o', '--keep-one-for-same-pid-rect', dest='keep_one_for_same_pid_rect',
         default=False, action='store_true', help='keep only one window for same (pid, rect)')
     option_parser.add_option(
         '-k', '--sort-key', dest='sort_keys', default=[], action='append', metavar='SORT_KEY',
-        help=f"sort key, can be {sort_keys_str}; default sort key is (pid, win_id)")
+        help=f"sort key, can be {supported_sort_keys_str}; default sort key is (pid, win_id)")
     option_parser.add_option(
         '-H', '--no-headers', dest='no_headers',
         default=False, action='store_true', help='print no header line')
@@ -125,22 +145,20 @@ if __name__ == '__main__':
     illegal_sort_keys = tuple(k for k in options.sort_keys if k not in supported_sort_keys)
     if illegal_sort_keys:
         print(f"Unsupported sort key: {', '.join(illegal_sort_keys)}!"
-              f" supported sort keys: {sort_keys_str}", file=sys.stderr)
-        exit(1)
+              f" supported sort keys: {supported_sort_keys_str}", file=sys.stderr)
+        return 1
 
     ############################################################
     # biz logic
     ############################################################
 
-    windows = list_window_infos()
-    if options.exclude_0_area:
-        windows = (w for w in windows if w.rect.width > 0 and w.rect.height > 0)
-    if options.keep_one_for_same_pid_rect:
-        windows = {(w.pid, w.rect.t()): w for w in windows}.values()
+    win_list = list_window_infos()
+    win_list = filter_window_infos(win_list, options.exclude_0_area, options.keep_one_for_same_pid_rect)
+    win_list = sorted_window_infos(win_list, options.sort_keys)
+    print_window_infos(win_list, no_headers=options.no_headers)
 
-    print_window_infos(sorted(
-        windows, key=lambda w: tuple(
-            getattr(w, k) if hasattr(w, k) else getattr(w.rect, k)
-            for k in options.sort_keys
-        ) + (w.pid, w.win_id)
-    ), no_headers=options.no_headers)
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
