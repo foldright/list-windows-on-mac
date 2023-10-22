@@ -6,7 +6,8 @@ from itertools import tee
 from optparse import OptionParser
 from typing import Iterable
 
-import Quartz
+# https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports
+import Quartz  # type: ignore
 
 __version__ = '1.1.0-dev'
 
