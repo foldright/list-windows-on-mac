@@ -4,7 +4,7 @@ import json
 import sys
 from dataclasses import dataclass
 from optparse import OptionParser
-from typing import Iterable
+from typing import Iterable, Tuple, Any
 
 # https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports
 import Quartz  # type: ignore
@@ -19,13 +19,13 @@ class Rect:
     width: int
     height: int
 
-    def t(self):
+    def t(self) -> Tuple[int, int, int, int]:
         """
         tuple representation
         """
         return self.x, self.y, self.width, self.height
 
-    def s(self):
+    def s(self) -> str:
         """
         tuple style string for output
         """
@@ -44,7 +44,7 @@ class WindowInfo:
 
 
 class _DataClassJSONEncoder(json.JSONEncoder):
-    def default(self, o):
+    def default(self, o: Any) -> Any:
         from dataclasses import is_dataclass, asdict
         if is_dataclass(o):
             return asdict(o)
@@ -86,7 +86,7 @@ def sorted_window_infos(win_list: Iterable[WindowInfo], sort_keys: Iterable[str]
     )
 
 
-def print_window_infos_table(win_list: Iterable[WindowInfo], no_headers: bool = False):
+def print_window_infos_table(win_list: Iterable[WindowInfo], no_headers: bool = False) -> None:
     from itertools import tee
 
     s_pid = 'PID'
@@ -120,11 +120,11 @@ def window_infos_to_json(win_list: Iterable[WindowInfo]) -> str:
     return dumps(list(win_list), cls=_DataClassJSONEncoder, indent=2)
 
 
-def print_window_infos_json(win_list: Iterable[WindowInfo]):
+def print_window_infos_json(win_list: Iterable[WindowInfo]) -> None:
     print(window_infos_to_json(win_list))
 
 
-def main():
+def main() -> int:
     from dataclasses import fields
     supported_sort_keys = tuple(
         [f.name for f in fields(WindowInfo) if f.name != 'rect']
