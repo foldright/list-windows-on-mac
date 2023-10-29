@@ -4,7 +4,7 @@ import json
 import sys
 from dataclasses import dataclass
 from optparse import OptionParser
-from typing import Iterable, Tuple, Any
+from typing import Any, Iterable, Tuple
 
 # https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports
 import Quartz  # type: ignore
@@ -45,7 +45,7 @@ class WindowInfo:
 
 class _DataClassJSONEncoder(json.JSONEncoder):
     def default(self, o: Any) -> Any:
-        from dataclasses import is_dataclass, asdict
+        from dataclasses import asdict, is_dataclass
         if is_dataclass(o):
             return asdict(o)
         return super().default(o)
