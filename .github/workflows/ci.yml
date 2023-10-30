@@ -25,11 +25,21 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: run lswin.py
+      - name: Smock run
         run: scripts/smock_run.sh
       - name: Install dev dependencies
         run: pip install -r requirements-dev.txt
-      - name: run lint
+      - name: Run lint
         run: scripts/lint.sh
-      - name: run tests
+      - name: Run tests
         run: scripts/test.sh
+      # https://docs.codecov.com/docs/code-coverage-with-python
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      # https://remarkablemark.org/blog/2017/10/12/check-git-dirty/
+      - name: Check git dirty
+        run: |
+          git status --short
+          [ -z "$(git status --short)" ]
