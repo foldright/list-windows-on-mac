@@ -13,7 +13,7 @@ jobs:
         python-version: [ "3.8", "3.9", "3.10", "3.11", "3.12" ]
       max-parallel: 64
       fail-fast: false
-    name: Test on python ${{ matrix.python-version }}
+    name: CI on python ${{ matrix.python-version }}
 
     steps:
       - uses: actions/checkout@v4
@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r requirements-main.txt
       - name: Smock run
         run: scripts/smock_run.sh
       - name: Install dev dependencies
