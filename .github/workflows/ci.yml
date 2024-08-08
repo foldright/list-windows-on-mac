@@ -35,7 +35,7 @@ jobs:
         run: scripts/test.sh
       # https://docs.codecov.com/docs/code-coverage-with-python
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       # https://remarkablemark.org/blog/2017/10/12/check-git-dirty/
